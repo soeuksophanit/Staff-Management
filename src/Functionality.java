@@ -23,6 +23,23 @@ public class Functionality {
         createTable(numberCols,menu,staffMembers,staffTypes,"");
     }
 
+    public static void initStaff(List<StaffMembers> staffMembers,List<StaffType> staffTypes){
+        staffMembers.add(new Volunteer(id_for_all_member,"John Cena","USA",1200));
+        staffTypes.add(new StaffType(id_for_all_member++,"Volunteer"));
+        staffMembers.add(new HourlySalaryEmployee(id_for_all_member++,"Ryan Ranold","PV",12,20));
+        staffTypes.add(new StaffType(id_for_all_member,"Hourly Salary Employee"));
+        staffMembers.add(new SalariedEmployee(id_for_all_member++,"Cheko Slovaki","Kandal",600,20));
+        staffTypes.add(new StaffType(id_for_all_member,"Salaries Employee"));
+        staffMembers.add(new Volunteer(id_for_all_member++,"Wickie John","Spain",500));
+        staffTypes.add(new StaffType(id_for_all_member,"Volunteer"));
+        staffMembers.add(new HourlySalaryEmployee(id_for_all_member++,"Dr Strange","USA",50,12));
+        staffTypes.add(new StaffType(id_for_all_member,"Hourly Salary Employee"));
+        staffMembers.add(new SalariedEmployee(id_for_all_member++,"Leonel Messi","ARG",1000,200));
+        staffTypes.add(new StaffType(id_for_all_member,"Salaries Employee"));
+        staffMembers.add(new Volunteer(id_for_all_member++,"Ronaldo","PT",1200));
+        staffTypes.add(new StaffType(id_for_all_member,"Volunteer"));
+    }
+
     public  static void createTable(int numberOfCol,String[] header_title,List<StaffMembers> staffMembersList,List<StaffType> memberType,String useForWhat){
         CellStyle numberStyle = new CellStyle(CellStyle.HorizontalAlign.center);
         Table t = new Table(numberOfCol, BorderStyle.UNICODE_ROUND_BOX,
@@ -135,11 +152,10 @@ public class Functionality {
 
     public static void chooseStaffToInput(List<StaffMembers> staffMembers,List<StaffType> staffTypes,int id){
         createTable(4,chooseStaffType,staffMembers,staffTypes,"");
-        System.out.print("=> Enter Type Number : ");
-        String option = new Scanner(System.in).next();
+        String option = doDataValidate("[0-9]+","Enter Type Number : ","Invalid Type",staffMembers,staffTypes);
         try{
-            if (option.equalsIgnoreCase("4") || Integer.parseInt(option)>4){
-                createTable(1,new String[]{"Invalid Choices"},staffMembers,staffTypes,"");
+            if (Integer.parseInt(option)==4 || Integer.parseInt(option) > 4){
+                createTable(1,new String[]{Integer.parseInt(option)==4? "Exit Input !!" : Integer.parseInt(option)>4? "Invalid Type" : ""},staffMembers,staffTypes,"");
                 return;
             }
         }catch (NumberFormatException e){
@@ -228,6 +244,7 @@ public class Functionality {
     }
 
     public static void updateStaff(List<StaffMembers> staffMembers,List<StaffType> staffTypes){
+        final int[] count = {0};
         String id = doDataValidate("[0-9]+","Enter ID to update : ","Invalid ID",staffMembers,staffTypes);
         List<StaffMembers> member = staffMembers.stream().filter(p->p.getId()==Integer.parseInt(id)).toList();
         List<StaffType> type = staffTypes.stream().filter(p->p.getId()==Integer.parseInt(id)).toList();
@@ -239,10 +256,12 @@ public class Functionality {
                         updateInput(staffMembers,staffTypes,staff,staff_type);
                         createTable(9, col_name, member, type, "for staff");
                     }else {
-                        createTable(1, new String[]{"ID was not found!!"}, staffMembers, staffTypes, "");
+                        count[0]++;
                     }
                 });
             });
+            if (count[0] == staffMembers.size())
+                createTable(1, new String[]{"ID was not found!!"}, staffMembers, staffTypes, "");
         }catch (ConcurrentModificationException e){
 
         }

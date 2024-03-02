@@ -5,6 +5,7 @@ public class Main {
     public static void main(String[] args) {
         List<StaffMembers> staffMembersList = new ArrayList<>();
         List<StaffType> staffTypes = new ArrayList<>();
+        Functionality.initStaff(staffMembersList,staffTypes);
         Functionality.startProgram(staffMembersList,staffTypes);
     }
 }
