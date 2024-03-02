@@ -15,6 +15,10 @@ public class Volunteer extends StaffMembers{
         return salary;
     }
 
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
     @Override
     public String toString() {
         return "Volunteer{" +

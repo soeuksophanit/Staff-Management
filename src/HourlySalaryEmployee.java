@@ -10,7 +10,7 @@ public class HourlySalaryEmployee extends StaffMembers{
 
     @Override
     public double pay() {
-        return 0;
+        return hourWorked*rate;
     }
 
     public int getHourWorked() {
