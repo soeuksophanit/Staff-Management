@@ -58,9 +58,9 @@ public class Functionality {
         t.addCell(String.valueOf(staffMembers.getId()),cellStyle);
         t.addCell(staffMembers.getName(),cellStyle);
         t.addCell(staffMembers.getAddress(),cellStyle);
-        t.addCell(String.valueOf(staffMembers instanceof Volunteer ? ((Volunteer) staffMembers).getSalary()
+        t.addCell(String.valueOf(staffMembers instanceof Volunteer ?"$ "+((Volunteer) staffMembers).getSalary()
                         : staffMembers instanceof HourlySalaryEmployee ? "\u001B[32m" + "----" + "\u001B[0m"
-                        : staffMembers instanceof SalariedEmployee ? ((SalariedEmployee) staffMembers).getSalary()
+                        : staffMembers instanceof SalariedEmployee ?"$ "+((SalariedEmployee) staffMembers).getSalary()
                         : "")
                 ,cellStyle);
         t.addCell(String.valueOf(staffMembers instanceof Volunteer ? "\u001B[32m" + "----" + "\u001B[0m"
@@ -78,9 +78,9 @@ public class Functionality {
                         : staffMembers instanceof SalariedEmployee ? "\u001B[32m" + "----" + "\u001B[0m"
                         : "")
                 ,cellStyle);
-        t.addCell(String.valueOf(staffMembers instanceof Volunteer ? staffMembers.pay()
-                        : staffMembers instanceof HourlySalaryEmployee ? staffMembers.pay()
-                        : staffMembers instanceof SalariedEmployee ? (staffMembers).pay()
+        t.addCell(String.valueOf(staffMembers instanceof Volunteer ?"$ "+staffMembers.pay()
+                        : staffMembers instanceof HourlySalaryEmployee ?"$ "+staffMembers.pay()
+                        : staffMembers instanceof SalariedEmployee ?"$ "+(staffMembers).pay()
                         : "")
                 ,cellStyle);
 
@@ -88,65 +88,81 @@ public class Functionality {
 
     public static void inputPersonData(List<StaffMembers> staffMembersList,List<StaffType> staffTypes,int id,int options){
         String type = options == 1 ? "Volunteer" : options == 2 ? "Hourly Employee" : options == 3 ? "Salaries Employee" : "";
-        String name,address,salary = null,bonus = null,hour = null,rate = null;
+        String name=null,address,salary = null,bonus = null,hour = null,rate = null;
         createTable(1,new String[]{type + " ID : " + id_for_all_member},staffMembersList,staffTypes,"");
-        System.out.print("Enter Name : ");
-        name = new Scanner(System.in).nextLine();
-        while (true){
-        if (isDataValidate(name, "[a-zA-Z]+\\s*")){
-            createTable(1,new String[]{"Not Valid Input name"},staffMembersList,staffTypes,"");
-        }else
-            break ;
-        }
-        System.out.print("Enter Address : ");
-        address = new Scanner(System.in).nextLine();
-        while (true){
-            if (isDataValidate(name, "[a-zA-Z0-9]+\\s*")){
-                createTable(1,new String[]{"Not Valid Input Address"},staffMembersList,staffTypes,"");
-            }else
-                break ;
-        }
+//        do {
+//            System.out.print("Enter Name : ");
+//            name = new Scanner(System.in).nextLine();
+//            if ((!Pattern.matches("[a-zA-Z]+\\s*[a-zA-Z]+",name))) {
+//                createTable(1, new String[]{"Invalid Name"}, staffMembersList, staffTypes, "");
+//                continue;
+//            }
+//            break;
+//        }while (true);
+        name = doDataValidate("[a-zA-Z]+\\s*[a-zA-Z]+","Enter Name : ","Invalid Name",staffMembersList,staffTypes);
+
+//        do{
+//            System.out.print("Enter Address : ");
+//            address = new Scanner(System.in).nextLine();
+//            if (!Pattern.matches("[a-zA-Z0-9]+\\s*[a-zA-Z0-9]+",address)){
+//                createTable(1, new String[]{"Invalid Address"}, staffMembersList, staffTypes, "");
+//                continue;
+//            }
+//            break;
+//        }while (true);
+        address = doDataValidate("[a-zA-Z]+\\s*[a-zA-Z]+","Enter Address : ","Invalid Address",staffMembersList,staffTypes);
+
+
         if (options!=2) {
-            System.out.print("Enter Salary : ");
-            salary = new Scanner(System.in).nextLine();
-            while (true){
-                if (isDataValidate(name, "[0-9]+\\.+[0-9]+")){
-                    createTable(1,new String[]{"Not Valid Input Salary"},staffMembersList,staffTypes,"");
-                }else
-                    break ;
-            }
+//            do{
+//                System.out.print("Enter Salary : ");
+//                salary = new Scanner(System.in).nextLine();
+//                if (!Pattern.matches("[0-9.0-9]+",salary)){
+//                    createTable(1, new String[]{"Invalid Salary"}, staffMembersList, staffTypes, "");
+//                    continue;
+//                }
+//                break;
+//            }while (true);
+            salary = doDataValidate("[0-9.0-9]+","Enter Salary : ","Invalid Salary",staffMembersList,staffTypes);
         }
         if (options == 3) {
-            System.out.print("Enter Bonus : ");
-            bonus = new Scanner(System.in).nextLine();
-            while (true){
-                if (isDataValidate(name, "[0-9]+")){
-                    createTable(1,new String[]{"Not Valid Input Bonus"},staffMembersList,staffTypes,"");
-                }else
-                    break ;
-            }
+//            do{
+//                System.out.print("Enter Bonus : ");
+//                bonus = new Scanner(System.in).nextLine();
+//                if (!Pattern.matches("[0-9.0-9]+",bonus)){
+//                    createTable(1, new String[]{"Invalid Bonus"}, staffMembersList, staffTypes, "");
+//                    continue;
+//                }
+//                break;
+//            }while (true);
+            bonus = doDataValidate("[0-9.0-9]+","Enter Bonus : ","Invalid Bonus",staffMembersList,staffTypes);
+
         }
 
         if (options == 2) {
-            System.out.print("Enter Hour : ");
-            hour = new Scanner(System.in).nextLine();
-            while (true){
-                if (isDataValidate(name, "[0-9]+")){
-                    createTable(1,new String[]{"Not Valid Input Hour"},staffMembersList,staffTypes,"");
-                }else
-                    break ;
-            }
+//            do{
+//                System.out.print("Enter Hour : ");
+//                hour = new Scanner(System.in).nextLine();
+//                if (!Pattern.matches("[0-9.0-9]+",hour)){
+//                    createTable(1, new String[]{"Invalid Hour"}, staffMembersList, staffTypes, "");
+//                    continue;
+//                }
+//                break;
+//            }while (true);
+            hour = doDataValidate("[0-9.0-9]+","Enter Hour : ","Invalid Hour",staffMembersList,staffTypes);
         }
 
         if (options == 2) {
-            System.out.print("Enter Rate : ");
-            rate = new Scanner(System.in).nextLine();
-            while (true){
-                if (isDataValidate(name, "[0-9]+\\.+[0-9]+")){
-                    createTable(1,new String[]{"Not Valid Input Rate"},staffMembersList,staffTypes,"");
-                }else
-                    break ;
-            }
+//            do{
+//                System.out.print("Enter Rate : ");
+//                rate = new Scanner(System.in).nextLine();
+//                if (!Pattern.matches("[0-9.0-9]+",rate)){
+//                    createTable(1, new String[]{"Invalid Rate"}, staffMembersList, staffTypes, "");
+//                    continue;
+//                }
+//                break;
+//            }while (true);
+            rate = doDataValidate("[0-9.0-9]+","Enter Rate : ","Invalid Rate",staffMembersList,staffTypes);
         }
 
         switch (options){
@@ -189,8 +205,16 @@ public class Functionality {
         }
         inputPersonData(staffMembers,staffTypes,id,Integer.parseInt(option));
     }
-    public static boolean isDataValidate(String validate_word,String regex){
-        return Pattern.matches(validate_word, regex);
+    public static String doDataValidate(String regex, String inputWhat, String errorWhat, List<StaffMembers> staffMembers, List<StaffType> staffTypes){
+        do {
+            System.out.print(inputWhat);
+            String validate_what = new Scanner(System.in).nextLine();
+            if ((!Pattern.matches(regex, validate_what))) {
+                createTable(1, new String[]{errorWhat}, staffMembers, staffTypes, "");
+                continue;
+            }
+            return validate_what;
+        }while (true);
     }
 
     public static void startProgram(List<StaffMembers> staffMembers,List<StaffType> staffTypes){
@@ -272,8 +296,7 @@ public class Functionality {
     }
 
     public static void updateStaff(List<StaffMembers> staffMembers,List<StaffType> staffTypes){
-        System.out.print("Enter ID to Update : ");
-        String id = new Scanner(System.in).next();
+        String id = doDataValidate("[0-9]+","Enter ID to update : ","Invalid ID",staffMembers,staffTypes);
         List<StaffMembers> member = staffMembers.stream().filter(p->p.getId()==Integer.parseInt(id)).toList();
         List<StaffType> type = staffTypes.stream().filter(p->p.getId()==Integer.parseInt(id)).toList();
         try {
@@ -282,6 +305,9 @@ public class Functionality {
                     if (Integer.parseInt(id) == staff.getId() && staff.getId() == staff_type.getId()) {
                         createTable(9, col_name, member, type, "for staff");
                         updateInput(staffMembers,staffTypes,staff,staff_type);
+                        createTable(9, col_name, member, type, "for staff");
+                    }else {
+                        createTable(1, new String[]{"ID was not found!!"}, staffMembers, staffTypes, "");
                     }
                 });
             });
@@ -291,65 +317,69 @@ public class Functionality {
     }
 
     public static void updateInput(List<StaffMembers> staffMembers,List<StaffType> staffTypes,StaffMembers members,StaffType staffType){
-        createTable(members instanceof Volunteer ? 4
-                : members instanceof HourlySalaryEmployee ? 5
-                : members instanceof SalariedEmployee ? 6 :0,
-                members instanceof Volunteer ? updateVolunteer
-                        : members instanceof HourlySalaryEmployee ? updateHourlyEmp
-                        : members instanceof SalariedEmployee ? updateSalaryEmp
-                        : updateVolunteer,staffMembers,staffTypes,""
-                );
-
-        System.out.print("=> Choose one column to update");
-        String option = new Scanner(System.in).next();
-        switch (option){
-            case "0":
-                return;
-            case "1":
-                System.out.print("=> Change Name to : ");
-                String newName = new Scanner(System.in).nextLine();
-                members.setName(newName);
-                System.out.println("Name has been updated !!");
-                break;
-            case "2":
-                System.out.print("=> Change Address to : ");
-                String newAddress = new Scanner(System.in).nextLine();
-                members.setAddress(newAddress);
-                System.out.println("Address has been updated !!");
-            case "3":
-                if (members instanceof HourlySalaryEmployee){
-                    System.out.print("=> Change hour to : ");
-                    String newHour = new Scanner(System.in).next();
-                    ((HourlySalaryEmployee) members).setHourWorked(Integer.parseInt(newHour));
-                    createTable(1, new String[]{"Hour has been updated !!"},staffMembers,staffTypes,"");
-                }else if (members instanceof Volunteer || members instanceof SalariedEmployee){
-                    System.out.print("=> Change salary to : ");
-                    String newSalary = new Scanner(System.in).next();
-                    if (members instanceof Volunteer) {
-                        ((Volunteer) members).setSalary(Double.parseDouble(newSalary));
-                        createTable(1, new String[]{"Salary has been updated !!"},staffMembers,staffTypes,"");
-                    }else{
-                        ((SalariedEmployee) members).setSalary(Double.parseDouble(newSalary));
-                        createTable(1, new String[]{"Salary has been updated !!"},staffMembers,staffTypes,"");
+        do {
+            createTable(members instanceof Volunteer ? 4
+                            : members instanceof HourlySalaryEmployee ? 5
+                            : members instanceof SalariedEmployee ? 5 :0,
+                    members instanceof Volunteer ? updateVolunteer
+                            : members instanceof HourlySalaryEmployee ? updateHourlyEmp
+                            : members instanceof SalariedEmployee ? updateSalaryEmp
+                            : updateVolunteer,staffMembers,staffTypes,""
+            );
+            System.out.print("=> Choose one column to update : ");
+            String option = new Scanner(System.in).next();
+            switch (option) {
+                case "0":
+                    createTable(1, new String[]{"Update Exited!!"}, staffMembers, staffTypes, "");
+                    return;
+                case "1":
+                    System.out.print("=> Change Name to : ");
+                    String newName = new Scanner(System.in).nextLine();
+                    members.setName(newName);
+                    createTable(1, new String[]{"Name has been updated !!"}, staffMembers, staffTypes, "");
+                    break;
+                case "2":
+                    System.out.print("=> Change Address to : ");
+                    String newAddress = new Scanner(System.in).nextLine();
+                    members.setAddress(newAddress);
+                    createTable(1, new String[]{"Address has been updated !!"}, staffMembers, staffTypes, "");
+                    break;
+                case "3":
+                    if (members instanceof HourlySalaryEmployee) {
+                        System.out.print("=> Change hour to : ");
+                        String newHour = new Scanner(System.in).next();
+                        ((HourlySalaryEmployee) members).setHourWorked(Integer.parseInt(newHour));
+                        createTable(1, new String[]{"Hour has been updated !!"}, staffMembers, staffTypes, "");
+                    } else if (members instanceof Volunteer || members instanceof SalariedEmployee) {
+                        System.out.print("=> Change salary to : ");
+                        String newSalary = new Scanner(System.in).next();
+                        if (members instanceof Volunteer) {
+                            ((Volunteer) members).setSalary(Double.parseDouble(newSalary));
+                            createTable(1, new String[]{"Salary has been updated !!"}, staffMembers, staffTypes, "");
+                        } else {
+                            ((SalariedEmployee) members).setSalary(Double.parseDouble(newSalary));
+                            createTable(1, new String[]{"Salary has been updated !!"}, staffMembers, staffTypes, "");
+                        }
                     }
-                }
-                break;
-            case "4":
-                if (members instanceof SalariedEmployee){
-                    System.out.print("=> Change Bonus to : ");
-                    String newBonus = new Scanner(System.in).next();
-                    ((SalariedEmployee) members).setBonus(Double.parseDouble(newBonus));
-                    createTable(1, new String[]{"Bonus has been updated !!"},staffMembers,staffTypes,"person");
-                }else {
-                    System.out.print("=> Change Rate to : ");
-                    String newRate = new Scanner(System.in).next();
-                    ((HourlySalaryEmployee) members).setRate(Double.parseDouble(newRate));
-                    createTable(1, new String[]{"Rate has been updated !!"},staffMembers,staffTypes,"");
-                }
-                break;
-            default:
-                createTable(1, new String[]{"Please Choose the correct option !!"},staffMembers,staffTypes,"");
-        }
+                    break;
+                case "4":
+                    if (members instanceof SalariedEmployee) {
+                        System.out.print("=> Change Bonus to : ");
+                        String newBonus = new Scanner(System.in).next();
+                        ((SalariedEmployee) members).setBonus(Double.parseDouble(newBonus));
+                        createTable(1, new String[]{"Bonus has been updated !!"}, staffMembers, staffTypes, "");
+                    } else {
+                        System.out.print("=> Change Rate to : ");
+                        String newRate = new Scanner(System.in).next();
+                        ((HourlySalaryEmployee) members).setRate(Double.parseDouble(newRate));
+                        createTable(1, new String[]{"Rate has been updated !!"}, staffMembers, staffTypes, "");
+                    }
+                    break;
+                default:
+                    createTable(1, new String[]{"Please Choose the correct option !!"}, staffMembers, staffTypes, "");
+            }
+        }while (true);
+
     }
 
 }
