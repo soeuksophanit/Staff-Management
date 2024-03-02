@@ -26,18 +26,18 @@ public class Functionality {
     public static void initStaff(List<StaffMembers> staffMembers,List<StaffType> staffTypes){
         staffMembers.add(new Volunteer(id_for_all_member,"John Cena","USA",1200));
         staffTypes.add(new StaffType(id_for_all_member++,"Volunteer"));
-        staffMembers.add(new HourlySalaryEmployee(id_for_all_member++,"Ryan Ranold","PV",12,20));
-        staffTypes.add(new StaffType(id_for_all_member,"Hourly Salary Employee"));
-        staffMembers.add(new SalariedEmployee(id_for_all_member++,"Cheko Slovaki","Kandal",600,20));
-        staffTypes.add(new StaffType(id_for_all_member,"Salaries Employee"));
-        staffMembers.add(new Volunteer(id_for_all_member++,"Wickie John","Spain",500));
-        staffTypes.add(new StaffType(id_for_all_member,"Volunteer"));
-        staffMembers.add(new HourlySalaryEmployee(id_for_all_member++,"Dr Strange","USA",50,12));
-        staffTypes.add(new StaffType(id_for_all_member,"Hourly Salary Employee"));
-        staffMembers.add(new SalariedEmployee(id_for_all_member++,"Leonel Messi","ARG",1000,200));
-        staffTypes.add(new StaffType(id_for_all_member,"Salaries Employee"));
-        staffMembers.add(new Volunteer(id_for_all_member++,"Ronaldo","PT",1200));
-        staffTypes.add(new StaffType(id_for_all_member,"Volunteer"));
+        staffMembers.add(new HourlySalaryEmployee(id_for_all_member,"Ryan Ranold","PV",12,20));
+        staffTypes.add(new StaffType(id_for_all_member++,"Hourly Salary Employee"));
+        staffMembers.add(new SalariedEmployee(id_for_all_member,"Cheko Slovaki","Kandal",600,20));
+        staffTypes.add(new StaffType(id_for_all_member++,"Salaries Employee"));
+        staffMembers.add(new Volunteer(id_for_all_member,"Wickie John","Spain",500));
+        staffTypes.add(new StaffType(id_for_all_member++,"Volunteer"));
+        staffMembers.add(new HourlySalaryEmployee(id_for_all_member,"Dr Strange","USA",50,12));
+        staffTypes.add(new StaffType(id_for_all_member++,"Hourly Salary Employee"));
+        staffMembers.add(new SalariedEmployee(id_for_all_member,"Leonel Messi","ARG",1000,200));
+        staffTypes.add(new StaffType(id_for_all_member++,"Salaries Employee"));
+        staffMembers.add(new Volunteer(id_for_all_member,"Ronaldo","PT",1200));
+        staffTypes.add(new StaffType(id_for_all_member++,"Volunteer"));
     }
 
     public  static void createTable(int numberOfCol,String[] header_title,List<StaffMembers> staffMembersList,List<StaffType> memberType,String useForWhat){
@@ -284,25 +284,21 @@ public class Functionality {
                     createTable(1, new String[]{"Update Exited!!"}, staffMembers, staffTypes, "");
                     return;
                 case "1":
-                    System.out.print("=> Change Name to : ");
                     String newName = doDataValidate("[a-zA-Z]+\\s*[a-zA-Z]+","Enter New Name : ","Invalid Name",staffMembers,staffTypes);
                     members.setName(newName);
                     createTable(1, new String[]{"Name has been updated !!"}, staffMembers, staffTypes, "");
                     break;
                 case "2":
-                    System.out.print("=> Change Address to : ");
                     String newAddress = doDataValidate("[a-zA-Z]+\\s*[a-zA-Z]+","Enter New Address : ","Invalid Address",staffMembers,staffTypes);
                     members.setAddress(newAddress);
                     createTable(1, new String[]{"Address has been updated !!"}, staffMembers, staffTypes, "");
                     break;
                 case "3":
                     if (members instanceof HourlySalaryEmployee) {
-                        System.out.print("=> Change hour to : ");
                         String newHour = doDataValidate("[0-9.0-9]+","Enter New Hour : ","Invalid Hour",staffMembers,staffTypes);
                         ((HourlySalaryEmployee) members).setHourWorked(Integer.parseInt(newHour));
                         createTable(1, new String[]{"Hour has been updated !!"}, staffMembers, staffTypes, "");
                     } else if (members instanceof Volunteer || members instanceof SalariedEmployee) {
-                        System.out.print("=> Change salary to : ");
                         String newSalary = doDataValidate("[0-9.0-9]+","Enter New Salary : ","Invalid Salary",staffMembers,staffTypes);
                         if (members instanceof Volunteer) {
                             ((Volunteer) members).setSalary(Double.parseDouble(newSalary));
@@ -315,12 +311,10 @@ public class Functionality {
                     break;
                 case "4":
                     if (members instanceof SalariedEmployee) {
-                        System.out.print("=> Change Bonus to : ");
                         String newBonus = doDataValidate("[0-9.0-9]+","Enter New Bonus : ","Invalid Bonus",staffMembers,staffTypes);
                         ((SalariedEmployee) members).setBonus(Double.parseDouble(newBonus));
                         createTable(1, new String[]{"Bonus has been updated !!"}, staffMembers, staffTypes, "");
                     } else {
-                        System.out.print("=> Change Rate to : ");
                         String newRate = doDataValidate("[0-9.0-9]+","Enter New Rate : ","Invalid Rate",staffMembers,staffTypes);
                         ((HourlySalaryEmployee) members).setRate(Double.parseDouble(newRate));
                         createTable(1, new String[]{"Rate has been updated !!"}, staffMembers, staffTypes, "");
